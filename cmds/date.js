@@ -1,3 +1,3 @@
-module.exports = function() {
-    return new Date().toString();
+module.exports = function(cb) {
+    cb(null, new Date().toString());
 }

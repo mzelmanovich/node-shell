@@ -1,21 +1,21 @@
 var cmds = require('./cmds');
 process.stdout.write('prompt > ');
 
+let cbOutFnc = function(err, result) {
+    if (err) {
+        process.stdout.write(err);
+    } else {
+        process.stdout.write(result);
+    }
+    process.stdout.write('\nprompt > ');
+};
 // The stdin 'data' event fires after a user types in a line
 process.stdin.on('data', function(data) {
     var cmd = data.toString().trim(); // remove the newline
-    let outPutStr;
 
-    switch (cmd) {
-        case 'date':
-            outPutStr = cmds.date();
-            break;
-        case 'pwd':
-            outPutStr = cmds.pwd();
-            break;
-        default:
-            outPutStr = 'You typed: ' + cmd;
+    if (cmds[cmd]) {
+        cmds[cmd](cbOutFnc);
+    } else {
+        cbOutFnc(null, 'You typed: ' + cmd);
     }
-    process.stdout.write(outPutStr);
-    process.stdout.write('\nprompt > ');
 });

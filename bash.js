@@ -18,15 +18,15 @@ let envVars = {
         $PATH: () => __dirname
     }
     // The stdin 'data' event fires after a user types in a line
-    let inputData = function(data, processedData) {
-    var input = data.toString().trim(); // remove the newline
+    let inputData = function(userInput, pipedData) {
+    var input = userInput.toString().trim(); // remove the newline
     nextCmd = input.split('|');
 
     var params = nextCmd.shift().split(' ');
     nextCmd = nextCmd.join('|');
     var cmd = params.shift();
     params = params.map((param) => envVars[param] ? envVars[param]() : param);
-    params = processedData ? [processedData].concat(params) : params;
+    params = pipedData ? [pipedData].concat(params) : params;
     if (cmds[cmd]) {
         cmds[cmd](cbOutFnc,params);
     } else {

@@ -14,7 +14,7 @@ process.stdin.on('data', function(data) {
     var cmd = data.toString().trim(); // remove the newline
 
     if (cmds[cmd]) {
-        cmds[cmd](cbOutFnc);
+        cmds[cmd](cbOutFnc, cmd);
     } else {
         cbOutFnc(null, 'You typed: ' + cmd);
     }

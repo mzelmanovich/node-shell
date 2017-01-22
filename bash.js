@@ -11,10 +11,11 @@ let cbOutFnc = function(err, result) {
 };
 // The stdin 'data' event fires after a user types in a line
 process.stdin.on('data', function(data) {
-    var cmd = data.toString().trim(); // remove the newline
-
+    var input = data.toString().trim(); // remove the newline
+    var params = input.split(' ');
+    var cmd = params.shift();
     if (cmds[cmd]) {
-        cmds[cmd](cbOutFnc, cmd);
+        cmds[cmd](cbOutFnc, params);
     } else {
         cbOutFnc(null, 'You typed: ' + cmd);
     }

@@ -9,14 +9,19 @@ let cbOutFnc = function(err, result) {
     }
     process.stdout.write('\nprompt > ');
 };
-// The stdin 'data' event fires after a user types in a line
+
+let envVars = {
+        $PATH: () => __dirname
+    }
+    // The stdin 'data' event fires after a user types in a line
 process.stdin.on('data', function(data) {
     var input = data.toString().trim(); // remove the newline
     var params = input.split(' ');
     var cmd = params.shift();
+    params = params.map((param) => envVars[param] ? envVars[param]() : param);
     if (cmds[cmd]) {
         cmds[cmd](cbOutFnc, params);
     } else {
-        cbOutFnc(null, 'You typed: ' + cmd);
+        cbOutFnc(null, 'You typed: ' + input);
     }
 });

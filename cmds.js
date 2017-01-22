@@ -4,5 +4,6 @@ module.exports = {
     ls: require('./cmds/ls'),
     echo: require('./cmds/echo'),
     cat: require('./cmds/cat'),
-    head: require('./cmds/head')
+    head: require('./cmds/head'),
+    tail: require('./cmds/tail')
 };

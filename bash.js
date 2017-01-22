@@ -3,7 +3,7 @@ process.stdout.write('prompt > ');
 
 let cbOutFnc = function(err, result) {
     if (err) {
-        process.stdout.write(err);
+        process.stdout.write(err.toString());
     } else {
         process.stdout.write(result);
     }
